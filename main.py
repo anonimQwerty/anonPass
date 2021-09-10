@@ -102,8 +102,12 @@ def generatepassword(mode, lenght):
 		for i in range(lenght):
 			passw+=random.choice(chars+specialchars)
 
-
 	if mode==6:
+		for i in range(lenght):
+			passw+=random.choice(numbers+specialchars)
+
+
+	if mode==7:
 		for i in range(lenght):
 			passw+=random.choice(chars+numbers+specialchars)
 
@@ -151,12 +155,12 @@ if startcommand==1:
 
 
 	with open('key.salt_key', 'w') as f:
-		salt=generatepassword(6, 256)
+		salt=generatepassword(7, 256)
 		f.write(salt)
 		print('File with salt has saved. Warning if you lost your key, you can\'t open your database in future')
 
 	if doescreatekeyforrecords==1:
-		key=generatepassword(6, 32)
+		key=generatepassword(7, 32)
 		#print(key)
 
 		with open('key.rec_key', 'w') as f:
@@ -185,7 +189,7 @@ if startcommand==1:
 
 
 	if doescreatekeyfordb==1:
-		key=generatepassword(6, 32)
+		key=generatepassword(7, 32)
 		aescrypt((f'{db_name}1.ass'), (f'{db_name}.ass'), key.encode('utf-8'))
 
 		ShredFile(f'{db_name}1.ass')
@@ -253,8 +257,8 @@ else:
 	tempvar.close()
 	
 
-	name_decrypted_db=generatepassword(1, 6)+'.'+generatepassword(1, 3)
-	tempname=generatepassword(1,6)+'.'+generatepassword(1, 3)
+	name_decrypted_db=generatepassword(1, 7)+'.'+generatepassword(1, 3)
+	tempname=generatepassword(1,7)+'.'+generatepassword(1, 3)
 
 	if doescreatedkeyfordb==1:
 		aesdecrypt(db_name, tempname, db_key)
@@ -371,10 +375,31 @@ d: delete record
 q: back to main menu: """)
 						if result=='c':
 							username=input('Enter username: ')
-							password=input('Enter password: ')
+							password=input('Enter password(leave 4 spases to generate password): ')
+
+							if password=='    ':
+								amount=int(input('Input amount chars in your password: '))
+								mode=int(input('''
+								Select one from this modes:
+1: chars only
+2: numbers only
+3: specialcars only
+4: chars + numbers
+5: chars + specialchars
+6: numbers + specialchars
+7: chars + numbers + specialchars: '''))
+								
+								while True:
+									password=generatepassword(mode, amount)
+									print(f'You password is {password}. Is this password ok? 1-yes, 2-no')
+									result_there=int(input())
+									if result_there==1:
+										del(amount, mode, result_there)
+										break
 							url=input('Enter url: ')
 							comment=input('Enter comment: ')
 
+							
 
 							if doescreatedkeyforrecords==1:
 								username=str_aes_crypt(username, rec_key)
