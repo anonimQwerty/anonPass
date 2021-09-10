@@ -5,24 +5,22 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, LargeBinary, cr
 def check_version():
 
 	with open('version.txt', 'r', encoding='utf-8') as f:
-		f=f.readline()
-		version_nums=f.split('.')
-		#print(version_nums)
+		version_nums=f.readline()
 	return version_nums
 
 def check_for_updates():
 	r=get('https://raw.githubusercontent.com/anonimQwerty/anonPass/master/version.txt')
 	if r.status_code==200:
 
-		new_version=r.text.split('.')
-		old_version=check_version()
-		
-		for i in range(0, 3):
-			if int(new_version[i])>int(old_version[i]):
-				print('The new version is aviable. If you have a git on your pc, you can update it')
-				does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
-				if does_update==1:
-					os.system('git pull')
+		new_version=int(r.text.replace('.', ''))
+		old_version=int(check_version().replace('.', ''))
+		print(new_version, old_version)
+
+		if new_version>old_version:
+			print('The new version is aviable. If you have a git on your pc, you can update it')
+			does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
+			if does_update==1:
+				os.system('git pull')
 
 
 	else:
@@ -42,7 +40,7 @@ def logo():
 /_/    \_\_| |_|\___/|_| |_|_|   \__,_|___/___/
 
 
-				version:{'.'.join(check_version())}
+				version:{check_version()}
 """)
 
 
