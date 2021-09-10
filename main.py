@@ -1,5 +1,32 @@
 import pyaes, hashlib, random, os
+from requests import Session, get
 from sqlalchemy import MetaData, Table, Column, Integer, String, LargeBinary, create_engine, insert, inspect, delete
+
+def check_version():
+
+	with open('version.txt', 'r', encoding='utf-8') as f:
+		f=f.readline()
+		version_nums=f.split('.')
+		#print(version_nums)
+	return version_nums
+
+def check_for_updates():
+	r=get('https://raw.githubusercontent.com/anonimQwerty/anonPass/master/version.txt')
+	if r.status_code==200:
+
+		new_version=r.text.split('.')
+		old_version=check_version()
+		
+		for i in range(0, 3):
+			if int(new_version[i])>int(old_version[i]):
+				print('The new version is aviable. If you have a git on your pc, you can update it')
+				does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
+				if does_update==1:
+					os.system('git pull')
+
+
+	else:
+		print("something went wrong")
 
 
 def logo():
@@ -7,13 +34,15 @@ def logo():
 		os.system ('cls')
 	else:
 		os.system ('clear')
-	print(r"""
+	print(rf"""
     /\                     |  __ \             
    /  \   _ __   ___  _ __ | |__) |_ _ ___ ___ 
   / /\ \ | '_ \ / _ \| '_ \|  ___/ _` / __/ __|
  / ____ \| | | | (_) | | | | |  | (_| \__ \__ \
 /_/    \_\_| |_|\___/|_| |_|_|   \__,_|___/___/
-						
+
+
+				version:{'.'.join(check_version())}
 """)
 
 
@@ -143,7 +172,7 @@ def ShredFile(file: str, cycles = 3):
 
 logo()
 
-startcommand=int(input('1. Create database\n2. Open database: '))
+startcommand=int(input('1. Create database\n2. Open database\n3. Check for updates: '))
 if startcommand==1:
 	db_name=input('\nSet name for database: ')
 	db_password=input('\nSet password for database: ')
@@ -206,7 +235,8 @@ if startcommand==1:
 		
 		
 
-
+elif startcommand==3:
+	check_for_updates()
 
 
 
@@ -439,6 +469,7 @@ q: back to main menu: """)
 				inspector=inspect(engine)
 				del(tablename)
 				del(stucture)
+
 
 
 
