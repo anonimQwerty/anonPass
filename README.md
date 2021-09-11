@@ -62,7 +62,7 @@ In first screen just type 3 to update this app
 
 ### УСТАНОВКА
 1. Загрузите и установите python по [этой ссылке](https://www.python.org/downloads/)
-2. AnonPass для обновления использует git, поэтому его тоже нужно загрузить и установить.  [Ссылка] (https://git-scm.com/)
+2. AnonPass для обновления использует git, поэтому его тоже нужно загрузить и установить.  [Ссылка](https://git-scm.com/)
 3. Скачайте репозиторий коммандой ```git clone https://github.com/anonimQwerty/anonPass```
 3. Установите необходимые библиотеки командой `` `pip install -r requirements.txt```
 
