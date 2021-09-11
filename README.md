@@ -18,6 +18,7 @@ Why best?
 ### INSTALLING
 1. Get python from [there click](https://www.python.org/downloads/)
 2. AnonPass requires git, so let's install it from [there click](https://git-scm.com/downloads)
+3. Download repo via command: ```git clone https://github.com/anonimQwerty/anonPass```
 3. Install requirements. Just type ```pip install -r requirements.txt```
 ### USING
 After starting, you can create new database or open existing or update app. 
@@ -38,6 +39,7 @@ In first screen just type 3 to update this app
 ### ВСТАНОВЛЕННЯ
 1. Завантажте та встановіть python за [цим посиланням](https://www.python.org/downloads/)
 2. AnonPass для оновлення використовує git, тому його теж потрібно завантажити та встановити. [посилання](https://git-scm.com/downloads)
+3. Завантажте репозиторій командою ```git clone https://github.com/anonimQwerty/anonPass```
 3. Встановіть необхідні бібліотеки командою ```pip install -r requirements.txt```
 
 ### ВИКОРИСТАННЯ
@@ -61,6 +63,7 @@ In first screen just type 3 to update this app
 ### УСТАНОВКА
 1. Загрузите и установите python по [этой ссылке](https://www.python.org/downloads/)
 2. AnonPass для обновления использует git, поэтому его тоже нужно загрузить и установить.  [Ссылка] (https://git-scm.com/)
+3. Скачайте репозиторий коммандой ```git clone https://github.com/anonimQwerty/anonPass```
 3. Установите необходимые библиотеки командой `` `pip install -r requirements.txt```
 
 ### ИСПОЛЬЗОВАНИЕ
