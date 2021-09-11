@@ -7,6 +7,7 @@ from modules.logo import logo
 from modules.check_version import check_version
 from modules.ShredFile import ShredFile
 from modules.generatepassword import generatepassword
+from modules.create_struckture import create_struckture
 
 
 
@@ -20,13 +21,26 @@ def check_new_version(server='https://raw.githubusercontent.com/anonimQwerty/ano
 	else:
 		print("something went wrong")
 
+def show_changelog(server='https://raw.githubusercontent.com/anonimQwerty/anonPass/master/changelog.txt'):
+	r=get(server)
+	if r.status_code==200:
+		changelog=r.text
+		return changelog
+
+
+	else:
+		print("something went wrong")
+
 
 def check_for_updates(position=0):
 	new_version=check_new_version()
 	old_version=check_version()
 	if int(new_version[position])>int(old_version[position]):
 		print('The new version is aviable. If you have a git on your pc, you can update it')
-		does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
+		changelog=int(input('Can I show changelog? 1-yes, 2-no: '))
+		if changelog==1:
+			print(show_changelog())
+		does_update=int(input('\n\n\nDo you wanna to update it? 1-yes, 2-no: '))
 		if does_update==1:
 			os.system('git pull')
 
@@ -41,15 +55,7 @@ def check_for_updates(position=0):
 
 
 
-def create_struckture(name, meta):
-	struck = Table(
-   name, meta, 
-   Column('id', Integer, primary_key = True), 
-   Column('user', LargeBinary), 
-   Column('passw', LargeBinary), 
-   Column('url', LargeBinary), 
-   Column('comment', LargeBinary))	
-	return struck
+
 
 def str_aes_crypt(stri, pas):
 	aes = pyaes.AESModeOfOperationCTR(pas)
@@ -132,8 +138,8 @@ def master_of_creation_passwords():
 
 
 logo()
-
-startcommand=int(input('1. Create database\n2. Open database\n3. Check for updates: '))
+check_for_updates()
+startcommand=int(input('1. Create database\n2. Open database\n3. Check for updates\n4. Watch changelog: '))
 if startcommand==1:
 	db_name=input('\nSet name for database: ')
 	db_password=input('\nSet password for database: ')
@@ -202,7 +208,7 @@ elif startcommand==3:
 
 
 elif startcommand==4:
-	check_for_updates()
+	print(show_changelog())
 
 
 else:

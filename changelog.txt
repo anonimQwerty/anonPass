@@ -1,5 +1,11 @@
+========0.1.1=======
+
+added ability to see changelog;
+some refaktoring and optimizations;
+now, checking updates will be automatically on start;
+
 ========0.1.0=======
 
-some refacktoring and optimizations;
+some refaktoring and optimizations;
 now you can change information in rows;
 changed algorhytms of find new versions
