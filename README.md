@@ -1,16 +1,19 @@
 # anonPass
 # DONATE ME
 Btc: ```bc1qz2n9yr6qtlsnl2ffpqjervlvsres55mmpyaau8```
+
 Eth: ```0x6eEb669b6792FcCfeE698bCB38761C73d87623f5```
+
 Trx: ```TKwkD2evaN629KMttMXVR29x1X2f3DX8nr```
+
 ## En 
 Best password manager
 Why best?
-*Because: 
-  *It has a 4 layers aes 256 encryption
-  *Doesn't send any thelemetry
-  *Free and open source
-  *Has a notabug mirror(in future)
+* Because: 
+  * It has a 4 layers aes 256 encryption
+  * Doesn't send any thelemetry
+  * Free and open source
+  * Has a notabug mirror(in future)
 
 ### INSTALLING
 1. Get python from [there click](https://www.python.org/downloads/)
@@ -26,11 +29,11 @@ In first screen just type 3 to update this app
 
 ## Ua
 Найкращий менеджер паролів
-*Ось чому:
-  *Має 4 шари шифрування aes 256
-  *Не відправляє телеметрії
-  *Безкоштовний та з відкритим вихідним кодом
-  *Має дзеркало notabug(в майбутньому)
+* Ось чому:
+  * Має 4 шари шифрування aes 256
+  * Не відправляє телеметрії
+  * Безкоштовний та з відкритим вихідним кодом
+  * Має дзеркало notabug(в майбутньому)
   
 ### ВСТАНОВЛЕННЯ
 1. Завантажте та встановіть python за [цим посиланням](https://www.python.org/downloads/)
