@@ -1,4 +1,6 @@
 # anonPass
+# [NotABug mirror](https://notabug.org/anonimQwerty/anonPass)
+
 # DONATE ME
 Btc: ```bc1qz2n9yr6qtlsnl2ffpqjervlvsres55mmpyaau8```
 
@@ -13,13 +15,14 @@ Why best?
   * It has a 4 layers aes 256 encryption
   * Doesn't send any thelemetry
   * Free and open source
-  * Has a notabug mirror(in future)
+  * Has a notabug mirror
 
 ### INSTALLING
 1. Get python from [there click](https://www.python.org/downloads/)
 2. AnonPass requires git, so let's install it from [there click](https://git-scm.com/downloads)
 3. Download repo via command: ```git clone https://github.com/anonimQwerty/anonPass```
 3. Install requirements. Just type ```pip install -r requirements.txt```
+3. Starting with command ```python3 main.py``` or ```python main.py```
 ### USING
 After starting, you can create new database or open existing or update app. 
 If you choose create database, you will be suggested to create database key(db key) and record key(rec key)
@@ -34,13 +37,14 @@ In first screen just type 3 to update this app
   * Має 4 шари шифрування aes 256
   * Не відправляє телеметрії
   * Безкоштовний та з відкритим вихідним кодом
-  * Має дзеркало notabug(в майбутньому)
+  * Має дзеркало notabug
   
 ### ВСТАНОВЛЕННЯ
 1. Завантажте та встановіть python за [цим посиланням](https://www.python.org/downloads/)
 2. AnonPass для оновлення використовує git, тому його теж потрібно завантажити та встановити. [посилання](https://git-scm.com/downloads)
 3. Завантажте репозиторій командою ```git clone https://github.com/anonimQwerty/anonPass```
 3. Встановіть необхідні бібліотеки командою ```pip install -r requirements.txt```
+3. Щоб запустити програму введіть команду ```python3 main.py``` або ```python main.py```
 
 ### ВИКОРИСТАННЯ
 Після запуску програми, вам буде запропоновано створити нову базу даних, відкрити існуючу або оновити додаток
@@ -58,13 +62,14 @@ In first screen just type 3 to update this app
   * Имеет 4 слоя шифрования aes 256
   * Не отправляет телеметрии
   * Бесплатный и с открытым исходным кодом
-  * Имеет зеркало notabug (в будущем)
+  * Имеет зеркало notabug
 
 ### УСТАНОВКА
 1. Загрузите и установите python по [этой ссылке](https://www.python.org/downloads/)
 2. AnonPass для обновления использует git, поэтому его тоже нужно загрузить и установить.  [Ссылка](https://git-scm.com/)
 3. Скачайте репозиторий коммандой ```git clone https://github.com/anonimQwerty/anonPass```
 3. Установите необходимые библиотеки командой `` `pip install -r requirements.txt```
+3. чтобы запустить программу введите комманду ```python3 main.py``` или ```python main.py```
 
 ### ИСПОЛЬЗОВАНИЕ
 После запуска программы, вам будет предложено создать новую базу данных, открыть существующую или обновить приложение
