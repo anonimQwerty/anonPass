@@ -1,47 +1,43 @@
 import pyaes, hashlib, random, os
 from requests import Session, get
-from sqlalchemy import MetaData, Table, Column, Integer, String, LargeBinary, create_engine, insert, inspect, delete
+from sqlalchemy import MetaData, Table, Column, Integer, String, LargeBinary, create_engine, insert, inspect, delete, update, text
+from sqlalchemy.orm import sessionmaker
 
-def check_version():
+from modules.logo import logo
+from modules.check_version import check_version
+from modules.ShredFile import ShredFile
+from modules.generatepassword import generatepassword
 
-	with open('version.txt', 'r', encoding='utf-8') as f:
-		version_nums=f.readline()
-	return version_nums
 
-def check_for_updates():
-	r=get('https://raw.githubusercontent.com/anonimQwerty/anonPass/master/version.txt')
+
+def check_new_version(server='https://raw.githubusercontent.com/anonimQwerty/anonPass/master/version.txt'):
+	r=get(server)
 	if r.status_code==200:
-
-		new_version=int(r.text.replace('.', ''))
-		old_version=int(check_version().replace('.', ''))
-		print(new_version, old_version)
-
-		if new_version>old_version:
-			print('The new version is aviable. If you have a git on your pc, you can update it')
-			does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
-			if does_update==1:
-				os.system('git pull')
+		new_version=r.text.split('.')
+		return new_version
 
 
 	else:
 		print("something went wrong")
 
 
-def logo():
-	if os.name == 'nt':
-		os.system ('cls')
+def check_for_updates(position=0):
+	new_version=check_new_version()
+	old_version=check_version()
+	if int(new_version[position])>int(old_version[position]):
+		print('The new version is aviable. If you have a git on your pc, you can update it')
+		does_update=int(input('Do you wanna to update it? 1-yes, 2-no: '))
+		if does_update==1:
+			os.system('git pull')
+
+	elif position==2:
+		print('No updates')
 	else:
-		os.system ('clear')
-	print(rf"""
-    /\                     |  __ \             
-   /  \   _ __   ___  _ __ | |__) |_ _ ___ ___ 
-  / /\ \ | '_ \ / _ \| '_ \|  ___/ _` / __/ __|
- / ____ \| | | | (_) | | | | |  | (_| \__ \__ \
-/_/    \_\_| |_|\___/|_| |_|_|   \__,_|___/___/
+		position+=1
+		check_for_updates(position)
+	
 
 
-				version:{check_version()}
-""")
 
 
 
@@ -103,67 +99,34 @@ def aesdecrypt(file1, file2, key):
 
 
 
-def generatepassword(mode, lenght):
-	passw=""
-	chars='qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
-	numbers="1234567890"
-	specialchars="!@#$%^&*()_-+=/<>?:;"
-
-	if mode==1:
-		for i in range(lenght):
-			passw+=random.choice(chars)
-
-	if mode==2:
-		for i in range(lenght):
-			passw+=random.choice(numbers)
-
-	if mode==3:
-		for i in range(lenght):
-			passw+=random.choice(specialchars)
-
-	if mode==4:
-		for i in range(lenght):
-			passw+=random.choice(chars+numbers)
-
-	if mode==5:
-		for i in range(lenght):
-			passw+=random.choice(chars+specialchars)
-
-	if mode==6:
-		for i in range(lenght):
-			passw+=random.choice(numbers+specialchars)
 
 
-	if mode==7:
-		for i in range(lenght):
-			passw+=random.choice(chars+numbers+specialchars)
+
+def master_of_creation_passwords():
+	amount=int(input('Input amount chars in your password: '))
+	mode=int(input('''
+						Select one from this modes:
+1: chars only
+2: numbers only
+3: specialcars only
+4: chars + numbers
+5: chars + specialchars
+6: numbers + specialchars
+7: chars + numbers + specialchars: '''))
+	while True:
+		password=generatepassword(mode, amount)
+		print(f'You password is {password}. Is this password ok? 1-yes, 2-no, 3-cancel')
+		result_there=int(input())
+		if result_there==1:
+			return password
+			break
+		elif result_there==3:
+			password=''
+			return password
+			break
 
 
-	return passw
 
-def ShredFile(file: str, cycles = 3):
-    # Check if file exists and is not directory
-    if not os.path.exists(file) or not os.path.isfile(file):
-        return False
-    # Shred file
-    try:
-        # Create random filename
-        RandomFileName = generatepassword(1, 6)
-        # Rewrite the data of file,
-        with open(file, "ba+") as delfile:
-            length = delfile.tell()
-            for _ in range(cycles):
-                delfile.seek(0)
-                delfile.write(random._urandom(length))
-        # Renames the file for completely remove traces
-        os.rename(file, RandomFileName)
-        # Finaly deletes the file
-        os.unlink(RandomFileName)
-    except Exception as error:
-        print(error)
-        return False
-    else:
-        return True
 
 
 
@@ -238,7 +201,8 @@ elif startcommand==3:
 
 
 
-
+elif startcommand==4:
+	check_for_updates()
 
 
 else:
@@ -303,6 +267,8 @@ else:
 	meta = MetaData()
 	inspector=inspect(engine)
 	connection=engine.connect()
+	session=sessionmaker(engine)
+	session=session()
 
 
 	logo()
@@ -400,30 +366,14 @@ q: back to menu: """)
 						result=input("""
 c: create record
 d: delete record
+e: edit record
 q: back to main menu: """)
 						if result=='c':
 							username=input('Enter username: ')
 							password=input('Enter password(leave 4 spases to generate password): ')
 
-							if password=='    ':
-								amount=int(input('Input amount chars in your password: '))
-								mode=int(input('''
-								Select one from this modes:
-1: chars only
-2: numbers only
-3: specialcars only
-4: chars + numbers
-5: chars + specialchars
-6: numbers + specialchars
-7: chars + numbers + specialchars: '''))
-								
-								while True:
-									password=generatepassword(mode, amount)
-									print(f'You password is {password}. Is this password ok? 1-yes, 2-no')
-									result_there=int(input())
-									if result_there==1:
-										del(amount, mode, result_there)
-										break
+							if password=='    ':	
+								password=master_of_creation_passwords()
 							url=input('Enter url: ')
 							comment=input('Enter comment: ')
 
@@ -449,6 +399,52 @@ q: back to main menu: """)
 						elif result=='d':
 							rec_id=int(input('Enter id record: '))
 							connection.execute(delete(select_table).where(select_table.c.id==rec_id))
+							changes_in_db=True
+							del(rec_id)
+
+
+
+						elif result=='e':
+							rec_id=input('Enter id record: ')
+							#print(inspector.get_table_names()[select_table_backup])
+							#print(type(select_table_backup))
+							username_backup = username
+							password_backup = password
+							url_backup = url
+							comment_backup = comment
+
+							username=input('Enter new username. If you dont want change, leave 2 spaces: ')
+							if username=='  ':
+								username=username_backup
+
+							password=input('Enter new password. If you dont want change, leave this field empty. If you wanna to generate password, leave 4 spaces. If you dont want change, leave 2 spaces: ')
+							if password=='    ':	
+								password=master_of_creation_passwords()
+							elif password=='  ':
+								password=password_backup
+
+							url=input('Enter new url. If you dont want change, leave 2 spaces: ')
+							if url=='  ':
+								url=url_backup
+							comment=input('Enter new comment. If you dont want change, leave 2 spaces: ')
+							if comment=='  ':
+								comment=comment_backup
+
+							if doescreatedkeyforrecords==1:
+								username=str_aes_crypt(username, rec_key)
+								password=str_aes_crypt(password, rec_key)
+								url=str_aes_crypt(url, rec_key)
+								comment=str_aes_crypt(comment, rec_key)
+
+
+							username=str_aes_crypt(username, gensalt(record_pass, salt_key))
+							password=str_aes_crypt(password, gensalt(record_pass, salt_key))
+							url=str_aes_crypt(url, gensalt(record_pass, salt_key))
+							comment=str_aes_crypt(comment, gensalt(record_pass, salt_key))
+
+
+							connection.execute(select_table.update().where(select_table.c.id==rec_id).values(user=username, passw=password, url=url, comment=comment))
+
 							changes_in_db=True
 							del(rec_id)
 

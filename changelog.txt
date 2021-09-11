@@ -1,0 +1,5 @@
+========0.1.0=======
+
+some refacktoring and optimizations;
+now you can change information in rows;
+changed algorhytms of find new versions
