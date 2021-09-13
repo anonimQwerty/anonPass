@@ -173,7 +173,7 @@ if startcommand==1:
 	
 	if doescreatekeyforrecords==2:
 		test=str_aes_crypt('test_data', gensalt(record_pass, salt))
-	print(test)
+	print("test")
 	cursor.execute(insert(first_table).values(user=test, passw=test, url=test, comment=test))
 	cursor.close()
 	
